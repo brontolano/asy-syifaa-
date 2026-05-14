@@ -4,11 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asy-Syifaa ERP - Landing</title>
+  <link rel="icon" type="image/x-icon" href="/AsySyifaa.ico" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <main class="landing">
     <section class="hero">
+      <div class="brand-head">
+        <img src="/assets/img/logo.png" alt="Logo Asy-Syifaa" class="brand-logo" />
+        <div>
+          <p class="brand-kicker">Asy-Syifaa Framework</p>
+          <p class="brand-sub">ERP Pesantren Terpadu</p>
+        </div>
+      </div>
       <p class="badge">Module 0 • Landing Page</p>
       <h1>ERP Pesantren Asy-Syifaa Wal Mahmuudiyyah</h1>
       <p class="lead">Pintu masuk informasi operasional pesantren: akademik, administrasi, dan keuangan dalam satu platform terpadu.</p>
@@ -18,10 +26,37 @@
       </div>
     </section>
 
-    <section class="cards">
-      <article class="card"><h3>Akademik</h3><p>Monitoring kelas, jadwal, dan progres pembelajaran.</p></article>
-      <article class="card"><h3>Administrasi</h3><p>Data santri, dokumen, dan kontrol operasional harian.</p></article>
-      <article class="card"><h3>Keuangan</h3><p>Ringkasan pembayaran dan indikator kesehatan kas.</p></article>
+    <section class="menu-grid">
+      <a class="menu-card" href="/dashboard">
+        <span class="menu-icon">📊</span>
+        <h3>Dashboard</h3>
+        <p>Ringkasan KPI pesantren per role.</p>
+      </a>
+      <article class="menu-card">
+        <span class="menu-icon">🎓</span>
+        <h3>Akademik</h3>
+        <p>Jadwal, nilai, dan progres pembelajaran.</p>
+      </article>
+      <article class="menu-card">
+        <span class="menu-icon">🧾</span>
+        <h3>Keuangan</h3>
+        <p>Tagihan, pembayaran, dan laporan kas.</p>
+      </article>
+      <article class="menu-card">
+        <span class="menu-icon">🧑‍🎓</span>
+        <h3>Data Santri</h3>
+        <p>Biodata santri dan wali terpusat.</p>
+      </article>
+      <article class="menu-card">
+        <span class="menu-icon">📣</span>
+        <h3>Komunikasi</h3>
+        <p>Pengumuman dan notifikasi harian.</p>
+      </article>
+      <article class="menu-card">
+        <span class="menu-icon">⚙️</span>
+        <h3>Pengaturan</h3>
+        <p>Konfigurasi akses dan preferensi sistem.</p>
+      </article>
     </section>
   </main>
 </body>
