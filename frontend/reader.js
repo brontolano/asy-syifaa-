@@ -21,9 +21,20 @@ let zoomLevel = 1;
 const MIN_ZOOM = 0.6;
 const MAX_ZOOM = 2.5;
 const ZOOM_STEP = 0.2;
-const MOBILE_BREAKPOINT = 768;
 let fitMode = "width";
 let touchStartX = null;
+const RPLayout = {
+  mobileWidth: 768,
+  get isMobile() {
+    return window.innerWidth <= this.mobileWidth;
+  },
+  get fitMode() {
+    return this.isMobile ? "width" : fitMode;
+  },
+  label() {
+    return this.fitMode === "width" ? "Fit Width" : "Fit Height";
+  }
+};
 
 function getParam(name) {
   return new URLSearchParams(window.location.search).get(name) || "";
@@ -40,8 +51,7 @@ async function renderPage(pageNum) {
   const baseViewport = page.getViewport({ scale: 1 });
   const widthScale = maxWidth / baseViewport.width;
   const heightScale = maxHeight / baseViewport.height;
-  const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
-  const targetFitMode = isMobile ? "width" : fitMode;
+  const targetFitMode = RPLayout.fitMode;
   const fitScale = targetFitMode === "height"
     ? Math.max(0.2, heightScale)
     : Math.max(0.2, widthScale);
@@ -58,7 +68,7 @@ async function renderPage(pageNum) {
   stateEl.textContent = `Page ${currentPage} / ${totalPages} • Zoom ${Math.round(zoomLevel * 100)}% • ${targetFitMode === "width" ? "Fit Width" : "Fit Height"}`;
   prevPageBtn.disabled = currentPage <= 1;
   nextPageBtn.disabled = currentPage >= totalPages;
-  fitToggleBtn.textContent = targetFitMode === "width" ? "Fit Width" : "Fit Height";
+  fitToggleBtn.textContent = RPLayout.label();
 }
 
 async function loadBook() {
