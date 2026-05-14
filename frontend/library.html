@@ -22,18 +22,12 @@
     <section id="uploadSection" class="widget-box">
       <h2>Upload PDF</h2>
       <form id="uploadForm" class="library-form">
-        <label>Judul Dokumen</label>
-        <input id="title" type="text" placeholder="Contoh: Kitab Fiqih Kelas 1" />
-        <label>Penulis</label>
-        <input id="author" type="text" placeholder="Contoh: Ustadz Ahmad" />
-        <label>Kategori</label>
-        <input id="category" type="text" placeholder="Contoh: Fiqih" />
-        <label>Bahasa</label>
-        <input id="language" type="text" value="id" placeholder="id / ar / en" />
-        <label>Tag (pisahkan dengan koma)</label>
-        <input id="tags" type="text" placeholder="kitab, fiqih, kelas-1" />
-        <label>File PDF</label>
-        <input id="pdf" type="file" accept="application/pdf" required />
+        <label>Judul Dokumen</label><input id="title" type="text" placeholder="Contoh: Kitab Fiqih Kelas 1" />
+        <label>Penulis</label><input id="author" type="text" placeholder="Contoh: Ustadz Ahmad" />
+        <label>Kategori</label><input id="category" type="text" placeholder="Contoh: Fiqih" />
+        <label>Bahasa</label><input id="language" type="text" value="id" placeholder="id / ar / en" />
+        <label>Tag (pisahkan dengan koma)</label><input id="tags" type="text" placeholder="kitab, fiqih, kelas-1" />
+        <label>File PDF</label><input id="pdf" type="file" accept="application/pdf" required />
         <button class="btn primary" type="submit">Upload PDF</button>
       </form>
       <p class="note">File tersimpan di server: <code>backend/storage/library-pdfs</code></p>
@@ -61,6 +55,12 @@
       <h2>Koleksi PDF</h2>
       <p id="listInfo" class="note"></p>
       <div id="libraryList" class="library-list"></div>
+    </section>
+
+    <section class="widget-box">
+      <h2>Bookmark Saya</h2>
+      <p id="bookmarkMsg" class="note"></p>
+      <div id="bookmarkList" class="library-list"></div>
     </section>
 
     <a class="back-link" href="/">← Kembali ke Landing</a>

@@ -66,6 +66,8 @@ Buka:
   - `GET /api/perpustakaan/books`
   - `GET /api/perpustakaan/search`
   - `GET /api/perpustakaan/books/{id}/content`
+  - `GET /api/perpustakaan/bookmarks`
+  - `POST /api/perpustakaan/bookmarks`
 
 ## Penyimpanan PDF Perpustakaan
 - Upload dilakukan dari halaman `http://localhost:3000/perpustakaan`

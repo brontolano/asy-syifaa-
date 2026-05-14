@@ -2,6 +2,8 @@ const form = document.getElementById("uploadForm");
 const msgEl = document.getElementById("uploadMsg");
 const listEl = document.getElementById("libraryList");
 const listInfoEl = document.getElementById("listInfo");
+const bookmarkListEl = document.getElementById("bookmarkList");
+const bookmarkMsgEl = document.getElementById("bookmarkMsg");
 const uploadSection = document.getElementById("uploadSection");
 const lockedSection = document.getElementById("lockedSection");
 const filterForm = document.getElementById("filterForm");
@@ -9,109 +11,79 @@ const resetFilterBtn = document.getElementById("resetFilter");
 
 let currentFilter = { q: "", category: "", language: "" };
 
-function formatBytes(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-}
+function formatBytes(bytes) { if (bytes < 1024) return `${bytes} B`; if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`; return `${(bytes / (1024 * 1024)).toFixed(2)} MB`; }
+function escapeHtml(value) { return (value || "").toString().replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;"); }
 
-function escapeHtml(value) {
-  return (value || "")
-    .toString()
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+async function saveBookmark(bookId) {
+  const pageRaw = window.prompt("Simpan bookmark halaman berapa?", "1");
+  if (!pageRaw) return;
+  const page = Number(pageRaw);
+  if (!Number.isFinite(page) || page < 1) return alert("Halaman harus angka >= 1");
+  const note = window.prompt("Catatan bookmark (opsional)", "") || "";
+
+  const resp = await fetch("/api/perpustakaan/bookmarks", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ bookId, page, note })
+  });
+  const data = await resp.json();
+  if (!resp.ok) return alert(data.message || "Gagal menyimpan bookmark");
+
+  bookmarkMsgEl.textContent = `Bookmark tersimpan di halaman ${data.page}`;
+  await loadBookmarks();
 }
+window.saveBookmark = saveBookmark;
 
 function row(item) {
   const uploaded = new Date(item.uploadedAt).toLocaleString("id-ID");
   const tags = (item.tags || []).length ? item.tags.map((v) => `<span class="tag-chip">${escapeHtml(v)}</span>`).join("") : "-";
-  return `
-    <article class="library-item">
-      <div>
-        <h3>${escapeHtml(item.title)}</h3>
-        <p>Penulis: ${escapeHtml(item.author || "-")}</p>
-        <p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p>
-        <p>Tag: ${tags}</p>
-        <p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p>
-      </div>
-      <div class="actions">
-        <a class="btn ghost" href="${item.fileUrl}" target="_blank" rel="noreferrer">Buka PDF</a>
-      </div>
-    </article>
-  `;
+  return `<article class="library-item"><div><h3>${escapeHtml(item.title)}</h3><p>Penulis: ${escapeHtml(item.author || "-")}</p><p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p>Tag: ${tags}</p><p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="actions"><a class="btn ghost" href="${item.fileUrl}" target="_blank" rel="noreferrer">Buka PDF</a><button class="btn ghost" type="button" onclick="saveBookmark('${item.id}')">Bookmark</button></div></article>`;
 }
 
-function toQueryString(filter) {
-  const q = new URLSearchParams();
-  if (filter.q) q.set("q", filter.q);
-  if (filter.category) q.set("category", filter.category);
-  if (filter.language) q.set("language", filter.language);
-  return q.toString();
+function bookmarkRow(item) {
+  const upd = new Date(item.updatedAt).toLocaleString("id-ID");
+  return `<article class="library-item"><div><h3>${escapeHtml(item.bookTitle)}</h3><p>Halaman: ${item.page}</p><p>Catatan: ${escapeHtml(item.note || "-")}</p><p>Diperbarui: ${upd}</p></div></article>`;
 }
+
+function toQueryString(filter) { const q = new URLSearchParams(); if (filter.q) q.set("q", filter.q); if (filter.category) q.set("category", filter.category); if (filter.language) q.set("language", filter.language); return q.toString(); }
 
 async function loadLibrary() {
   const qs = toQueryString(currentFilter);
   const resp = await fetch(`/api/perpustakaan/search${qs ? `?${qs}` : ""}`);
   const data = await resp.json();
-
   listInfoEl.textContent = `${data.total || 0} dokumen ditemukan`;
-
-  if (!data.data.length) {
-    listEl.innerHTML = "<p class='note'>Belum ada dokumen sesuai filter.</p>";
-    return;
-  }
-
+  if (!data.data.length) { listEl.innerHTML = "<p class='note'>Belum ada dokumen sesuai filter.</p>"; return; }
   listEl.innerHTML = data.data.map(row).join("");
+}
+
+async function loadBookmarks() {
+  const resp = await fetch("/api/perpustakaan/bookmarks");
+  const data = await resp.json();
+  if (!data.data.length) { bookmarkListEl.innerHTML = "<p class='note'>Belum ada bookmark tersimpan.</p>"; return; }
+  bookmarkListEl.innerHTML = data.data.map(bookmarkRow).join("");
 }
 
 async function applyUploadAccess() {
   const s = await window.erpAuth.getSession();
-  if (s.authenticated && s.role === "superadmin") {
-    uploadSection.hidden = false;
-    lockedSection.hidden = true;
-    msgEl.textContent = "Mode superadmin aktif: upload PDF diizinkan.";
-    return;
-  }
-  uploadSection.hidden = true;
-  lockedSection.hidden = false;
+  if (s.authenticated && s.role === "superadmin") { uploadSection.hidden = false; lockedSection.hidden = true; msgEl.textContent = "Mode superadmin aktif: upload PDF diizinkan."; return; }
+  uploadSection.hidden = true; lockedSection.hidden = false;
 }
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  const title = document.getElementById("title").value.trim();
-  const author = document.getElementById("author").value.trim();
-  const category = document.getElementById("category").value.trim();
-  const language = document.getElementById("language").value.trim();
-  const tags = document.getElementById("tags").value.trim();
-  const pdf = document.getElementById("pdf").files[0];
-
-  if (!pdf) {
-    msgEl.textContent = "Pilih file PDF dulu.";
-    return;
-  }
-
   const body = new FormData();
-  body.append("title", title);
-  body.append("author", author);
-  body.append("category", category);
-  body.append("language", language);
-  body.append("tags", tags);
+  body.append("title", document.getElementById("title").value.trim());
+  body.append("author", document.getElementById("author").value.trim());
+  body.append("category", document.getElementById("category").value.trim());
+  body.append("language", document.getElementById("language").value.trim());
+  body.append("tags", document.getElementById("tags").value.trim());
+  const pdf = document.getElementById("pdf").files[0];
+  if (!pdf) return (msgEl.textContent = "Pilih file PDF dulu.");
   body.append("pdf", pdf);
-
   msgEl.textContent = "Sedang upload...";
-
   const resp = await fetch("/api/library/upload", { method: "POST", body });
   const data = await resp.json();
-
-  if (!resp.ok) {
-    msgEl.textContent = data.message || "Upload gagal.";
-    return;
-  }
-
+  if (!resp.ok) return (msgEl.textContent = data.message || "Upload gagal.");
   msgEl.textContent = `Upload berhasil: ${data.title}`;
   form.reset();
   await loadLibrary();
@@ -119,19 +91,12 @@ form.addEventListener("submit", async (e) => {
 
 filterForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  currentFilter = {
-    q: document.getElementById("q").value.trim(),
-    category: document.getElementById("filterCategory").value.trim(),
-    language: document.getElementById("filterLanguage").value.trim()
-  };
+  currentFilter = { q: document.getElementById("q").value.trim(), category: document.getElementById("filterCategory").value.trim(), language: document.getElementById("filterLanguage").value.trim() };
   await loadLibrary();
 });
 
-resetFilterBtn.addEventListener("click", async () => {
-  filterForm.reset();
-  currentFilter = { q: "", category: "", language: "" };
-  await loadLibrary();
-});
+resetFilterBtn.addEventListener("click", async () => { filterForm.reset(); currentFilter = { q: "", category: "", language: "" }; await loadLibrary(); });
 
 applyUploadAccess();
 loadLibrary();
+loadBookmarks();
