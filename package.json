@@ -1,0 +1,14 @@
+{
+  "name": "asy-syifaa-erp-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MVP Module 1 Dashboard + Module 2 Master Data Santri",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

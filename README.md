@@ -1,23 +1,29 @@
 # ERP Asy-Syifaa Wal Mahmuudiyyah
 
-Repository ini menyimpan implementasi ERP Pesantren Terpadu berdasarkan dokumen PRD `PRD_ERP_PESANTREN_ASY_SYIFAA.md`.
+Repository implementasi bertahap ERP Pesantren berdasarkan PRD `PRD_ERP_PESANTREN_ASY_SYIFAA.md`.
 
-## Ruang Lingkup Awal
-- Foundation project dari PRD v1.0 (Mei 2026)
-- Fokus eksekusi bertahap (MVP lebih dulu)
-- Siap untuk tracking progress di GitHub
+## Progress Saat Ini
+- Module 0: Landing Page (selesai versi MVP)
+- Module 1: Dashboard role-based (selesai versi MVP)
+- Module 2+: belum dimulai pada branch ini
 
-## Struktur Saat Ini
-- `PRD_ERP_PESANTREN_ASY_SYIFAA.md`: Dokumen kebutuhan utama
-- `docs/IMPLEMENTATION_PLAN.md`: Breakdown implementasi fase awal
+## Struktur
+- `backend/server.js`: API dan static server Express
+- `frontend/index.html`: Module 0 Landing Page
+- `frontend/dashboard.html`: Module 1 Dashboard
+- `frontend/dashboard.js`: logika role-based dashboard
+- `frontend/styles.css`: styling UI
 
-## Cara Mulai
-1. Baca `PRD_ERP_PESANTREN_ASY_SYIFAA.md`
-2. Ikuti urutan kerja di `docs/IMPLEMENTATION_PLAN.md`
-3. Commit progres kecil per modul/fitur
+## Menjalankan Lokal
+```bash
+npm install
+npm run dev
+```
 
-## Workflow Git yang Disarankan
-1. Buat branch fitur: `feature/<nama-fitur>`
-2. Commit kecil dan jelas
-3. Buka Pull Request ke `main`
-4. Merge setelah review
+Buka:
+- `http://localhost:3000/` (Module 0)
+- `http://localhost:3000/dashboard` (Module 1)
+
+## Endpoint
+- `GET /api/health`
+- `GET /api/dashboard/summary?role=ustadz|mudiraam|abuya`
