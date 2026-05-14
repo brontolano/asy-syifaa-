@@ -1,6 +1,8 @@
 const form = document.getElementById("uploadForm");
 const msgEl = document.getElementById("uploadMsg");
 const listEl = document.getElementById("libraryList");
+const uploadSection = document.getElementById("uploadSection");
+const lockedSection = document.getElementById("lockedSection");
 
 function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`;
@@ -39,12 +41,13 @@ async function loadLibrary() {
 async function applyUploadAccess() {
   const s = await window.erpAuth.getSession();
   if (s.authenticated && s.role === "superadmin") {
+    uploadSection.hidden = false;
+    lockedSection.hidden = true;
     msgEl.textContent = "Mode superadmin aktif: upload PDF diizinkan.";
     return;
   }
-
-  form.querySelectorAll("input,button").forEach((el) => (el.disabled = true));
-  msgEl.textContent = "Mode publik: upload PDF tidak diizinkan.";
+  uploadSection.hidden = true;
+  lockedSection.hidden = false;
 }
 
 form.addEventListener("submit", async (e) => {

@@ -28,7 +28,7 @@
       <p id="sessionInfo" class="note"></p>
     </section>
 
-    <section class="widget-box">
+    <section class="widget-box compact-auth">
       <h2>Login Superadmin</h2>
       <form id="loginForm" class="library-form">
         <label>Username</label>
@@ -37,34 +37,34 @@
         <input id="password" type="password" placeholder="********" required />
         <div class="actions">
           <button class="btn primary" type="submit">Login</button>
-          <button id="logoutBtn" class="btn ghost" type="button">Logout</button>
+          <button id="logoutBtn" class="btn ghost" type="button" hidden>Logout</button>
         </div>
       </form>
       <p id="authMsg" class="note"></p>
     </section>
 
     <section class="menu-grid">
-      <a class="menu-card" href="/dashboard">
+      <a class="menu-card" href="/dashboard" data-protected="true">
         <span class="menu-icon">📊</span>
         <h3>Dashboard</h3>
         <p>Khusus superadmin (non-publik).</p>
       </a>
-      <article class="menu-card">
+      <article class="menu-card" data-protected="true">
         <span class="menu-icon">🎓</span>
         <h3>Akademik</h3>
         <p>Jadwal, nilai, dan progres pembelajaran.</p>
       </article>
-      <article class="menu-card">
+      <article class="menu-card" data-protected="true">
         <span class="menu-icon">🧾</span>
         <h3>Keuangan</h3>
         <p>Tagihan, pembayaran, dan laporan kas.</p>
       </article>
-      <article class="menu-card">
+      <article class="menu-card" data-protected="true">
         <span class="menu-icon">🧑‍🎓</span>
         <h3>Data Santri</h3>
         <p>Biodata santri dan wali terpusat.</p>
       </article>
-      <article class="menu-card">
+      <article class="menu-card" data-protected="true">
         <span class="menu-icon">📣</span>
         <h3>Komunikasi</h3>
         <p>Pengumuman dan notifikasi harian.</p>

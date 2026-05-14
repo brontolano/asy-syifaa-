@@ -265,3 +265,11 @@ select:focus,
 .library-item p {
   margin: 0 0 6px;
 }
+
+.compact-auth {
+  max-width: 460px;
+}
+
+.hidden-by-access {
+  display: none;
+}

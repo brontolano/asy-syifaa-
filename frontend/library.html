@@ -19,7 +19,7 @@
       </div>
     </header>
 
-    <section class="widget-box">
+    <section id="uploadSection" class="widget-box">
       <h2>Upload PDF</h2>
       <form id="uploadForm" class="library-form">
         <label>Judul Dokumen</label>
@@ -31,6 +31,10 @@
       <p class="note">File tersimpan di server: <code>backend/storage/library-pdfs</code></p>
       <p class="note">Metadata tersimpan di: <code>backend/data/library.json</code></p>
       <p id="uploadMsg" class="note"></p>
+    </section>
+    <section id="lockedSection" class="widget-box" hidden>
+      <h2>Upload PDF Terkunci</h2>
+      <p class="note">Fitur upload hanya untuk superadmin. User publik hanya dapat membaca koleksi PDF.</p>
     </section>
 
     <section class="widget-box">
