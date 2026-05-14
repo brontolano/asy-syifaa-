@@ -1,6 +1,7 @@
 const roleEl = document.getElementById("role");
 const kpiGridEl = document.getElementById("kpiGrid");
 const widgetListEl = document.getElementById("widgetList");
+const dashboardMsg = document.getElementById("dashboardMsg");
 
 function toKpis(summary) {
   return [
@@ -15,6 +16,14 @@ async function loadDashboard(role) {
   const resp = await fetch(`/api/dashboard/summary?role=${role}`);
   const data = await resp.json();
 
+  if (!resp.ok) {
+    dashboardMsg.textContent = data.message || "Akses ditolak.";
+    kpiGridEl.innerHTML = "";
+    widgetListEl.innerHTML = "";
+    return;
+  }
+
+  dashboardMsg.textContent = "Akses superadmin aktif.";
   kpiGridEl.innerHTML = "";
   toKpis(data.summary).forEach(([label, value]) => {
     const card = document.createElement("article");

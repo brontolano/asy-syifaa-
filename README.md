@@ -29,11 +29,29 @@ Buka:
 - `http://localhost:3000/dashboard` (Module 1)
 - `http://localhost:3000/perpustakaan` (Module 15)
 
+## Rencana Domain/Subdomain
+- `asy-syifaa.com` -> website public utama (di luar app ini)
+- `erp.asy-syifaa.com` -> ERP Landing
+- `perpustakaan.asy-syifaa.com` -> Perpustakaan Digital
+- `[nama_modul].asy-syifaa.com` -> modul per subdomain (bertahap)
+
 ## Endpoint
 - `GET /api/health`
 - `GET /api/dashboard/summary?role=ustadz|mudiraam|abuya`
 - `GET /api/library`
 - `POST /api/library/upload` (`multipart/form-data`, field file: `pdf`)
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/session`
+
+## Aturan Role Saat Ini
+- `superadmin` dapat mengakses Dashboard dan upload PDF perpustakaan.
+- Akun default superadmin:
+  - Username: `superadmin`
+  - Password: `bismillah`
+- User publik hanya bisa mengakses modul/halaman publik:
+  - Landing (`/`)
+  - Perpustakaan (`/perpustakaan`) untuk lihat/baca PDF (tanpa upload).
 
 ## Penyimpanan PDF Perpustakaan
 - Upload dilakukan dari halaman `http://localhost:3000/perpustakaan`

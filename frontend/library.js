@@ -36,6 +36,17 @@ async function loadLibrary() {
   listEl.innerHTML = data.data.map(row).join("");
 }
 
+async function applyUploadAccess() {
+  const s = await window.erpAuth.getSession();
+  if (s.authenticated && s.role === "superadmin") {
+    msgEl.textContent = "Mode superadmin aktif: upload PDF diizinkan.";
+    return;
+  }
+
+  form.querySelectorAll("input,button").forEach((el) => (el.disabled = true));
+  msgEl.textContent = "Mode publik: upload PDF tidak diizinkan.";
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -66,4 +77,5 @@ form.addEventListener("submit", async (e) => {
   await loadLibrary();
 });
 
+applyUploadAccess();
 loadLibrary();

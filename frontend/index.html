@@ -25,13 +25,29 @@
         <a class="btn ghost" href="/api/health">Cek Status API</a>
         <button class="btn ghost" type="button" data-theme-toggle>Mode Gelap</button>
       </div>
+      <p id="sessionInfo" class="note"></p>
+    </section>
+
+    <section class="widget-box">
+      <h2>Login Superadmin</h2>
+      <form id="loginForm" class="library-form">
+        <label>Username</label>
+        <input id="username" type="text" placeholder="superadmin" required />
+        <label>Password</label>
+        <input id="password" type="password" placeholder="********" required />
+        <div class="actions">
+          <button class="btn primary" type="submit">Login</button>
+          <button id="logoutBtn" class="btn ghost" type="button">Logout</button>
+        </div>
+      </form>
+      <p id="authMsg" class="note"></p>
     </section>
 
     <section class="menu-grid">
       <a class="menu-card" href="/dashboard">
         <span class="menu-icon">📊</span>
         <h3>Dashboard</h3>
-        <p>Ringkasan KPI pesantren per role.</p>
+        <p>Khusus superadmin (non-publik).</p>
       </a>
       <article class="menu-card">
         <span class="menu-icon">🎓</span>
@@ -56,11 +72,13 @@
       <a class="menu-card" href="/perpustakaan">
         <span class="menu-icon">📚</span>
         <h3>Perpustakaan Digital</h3>
-        <p>Upload, simpan, dan baca koleksi PDF.</p>
+        <p>Publik untuk lihat PDF, upload hanya superadmin.</p>
       </a>
     </section>
   </main>
 
   <script src="/theme.js"></script>
+  <script src="/auth.js"></script>
+  <script src="/landing.js"></script>
 </body>
 </html>
