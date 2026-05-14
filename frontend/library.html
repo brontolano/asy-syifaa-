@@ -8,19 +8,40 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body class="app-base">
-  <main class="dashboard app-main">
-    <header class="topbar">
-      <div class="topbar-title">
+  <main class="dashboard app-main library-app-main">
+    <header class="library-appbar">
+      <div class="library-appbar-start">
         <img src="/assets/img/logo.png" alt="Logo Asy-Syifaa" class="brand-logo small" />
-        <h1>Perpustakaan Digital</h1>
+        <div>
+          <p class="library-kicker">ERP Pesantren</p>
+          <h1>Perpustakaan Digital</h1>
+        </div>
       </div>
-      <div class="actions">
-        <button class="btn ghost" type="button" data-theme-toggle>Mode Gelap</button>
-      </div>
+      <button class="btn ghost" type="button" data-theme-toggle>Mode Gelap</button>
     </header>
 
+    <section class="library-hero">
+      <h2>Baca Kitab & Referensi Dalam Aplikasi</h2>
+      <p>Viewer berbasis PDF.js, mobile responsive ala RPLayout, dan tetap di dalam sistem ERP.</p>
+      <p id="listInfo" class="note"></p>
+    </section>
+
+    <section class="widget-box library-search-box">
+      <form id="filterForm" class="library-form-inline">
+        <input id="q" type="text" placeholder="Cari judul, penulis, kategori, tag..." />
+        <input id="filterCategory" type="text" placeholder="Kategori" />
+        <input id="filterLanguage" type="text" placeholder="Bahasa" />
+        <button class="btn ghost" type="submit">Cari</button>
+        <button id="resetFilter" class="btn ghost" type="button">Reset</button>
+      </form>
+      <div class="library-view-switch">
+        <button id="viewListBtn" class="btn ghost" type="button">List</button>
+        <button id="viewGridBtn" class="btn ghost" type="button">Grid</button>
+      </div>
+    </section>
+
     <section id="uploadSection" class="widget-box">
-      <h2>Upload PDF</h2>
+      <h2>Upload PDF (Admin)</h2>
       <form id="uploadForm" class="library-form">
         <label>Judul Dokumen</label><input id="title" type="text" placeholder="Contoh: Kitab Fiqih Kelas 1" />
         <label>Penulis</label><input id="author" type="text" placeholder="Contoh: Ustadz Ahmad" />
@@ -30,41 +51,24 @@
         <label>File PDF</label><input id="pdf" type="file" accept="application/pdf" required />
         <button class="btn primary" type="submit">Upload PDF</button>
       </form>
-      <p class="note">File tersimpan di server: <code>backend/storage/library-pdfs</code></p>
-      <p class="note">Metadata tersimpan di: <code>backend/data/library.json</code></p>
+      <p class="note">File: <code>backend/storage/library-pdfs</code> • Metadata: <code>backend/data/library.json</code></p>
       <p id="uploadMsg" class="note"></p>
     </section>
 
     <section id="lockedSection" class="widget-box" hidden>
-      <h2>Upload PDF Terkunci</h2>
-      <p class="note">Fitur upload hanya untuk superadmin. User publik hanya dapat membaca koleksi PDF.</p>
-    </section>
-
-    <section class="widget-box">
-      <h2>Pencarian & Filter</h2>
-      <form id="filterForm" class="library-form-inline">
-        <input id="q" type="text" placeholder="Cari judul, penulis, kategori, tag..." />
-        <input id="filterCategory" type="text" placeholder="Kategori" />
-        <input id="filterLanguage" type="text" placeholder="Bahasa" />
-        <button class="btn ghost" type="submit">Terapkan</button>
-        <button id="resetFilter" class="btn ghost" type="button">Reset</button>
-      </form>
+      <h2>Upload Terkunci</h2>
+      <p class="note">Akses upload hanya untuk superadmin. User publik tetap dapat membaca koleksi.</p>
     </section>
 
     <section class="widget-box">
       <h2>Koleksi PDF</h2>
-      <p id="listInfo" class="note"></p>
-      <div class="actions app-toolbar">
-        <button id="viewListBtn" class="btn ghost" type="button">List</button>
-        <button id="viewGridBtn" class="btn ghost" type="button">Grid</button>
-      </div>
       <div id="libraryList" class="library-list"></div>
     </section>
 
     <section class="widget-box">
       <h2>Bookmark Saya</h2>
       <p id="bookmarkMsg" class="note"></p>
-      <div id="bookmarkList" class="library-list"></div>
+      <div id="bookmarkList" class="library-list bookmark-list"></div>
     </section>
   </main>
 

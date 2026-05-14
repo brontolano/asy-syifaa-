@@ -77,12 +77,12 @@ async function renderGridCovers() {
 function row(item) {
   const uploaded = new Date(item.uploadedAt).toLocaleString("id-ID");
   const tags = (item.tags || []).length ? item.tags.map((v) => `<span class="tag-chip">${escapeHtml(v)}</span>`).join("") : "-";
-  return `<article class="library-item"><div class="library-cover-wrap"><canvas class="library-cover" data-cover-url="${escapeHtml(item.fileUrl)}"></canvas></div><div><h3>${escapeHtml(item.title)}</h3><p>Penulis: ${escapeHtml(item.author || "-")}</p><p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p>Tag: ${tags}</p><p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="actions"><a class="btn ghost" href="/perpustakaan/reader?id=${escapeHtml(item.id)}">Buka PDF</a><button class="btn ghost icon-btn js-save-bookmark" type="button" data-book-id="${escapeHtml(item.id)}" aria-label="Simpan bookmark" title="Simpan bookmark">★</button></div></article>`;
+  return `<article class="library-item"><div class="library-cover-wrap"><canvas class="library-cover" data-cover-url="${escapeHtml(item.fileUrl)}"></canvas></div><div class="library-meta"><h3>${escapeHtml(item.title)}</h3><p class="library-sub">Penulis: ${escapeHtml(item.author || "-")}</p><p class="library-sub">Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p class="library-tags">Tag: ${tags}</p><p class="library-sub">${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="library-card-actions"><a class="btn ghost" href="/perpustakaan/reader?id=${escapeHtml(item.id)}">Baca</a><button class="btn ghost icon-btn js-save-bookmark" type="button" data-book-id="${escapeHtml(item.id)}" aria-label="Simpan bookmark" title="Simpan bookmark">★</button></div></article>`;
 }
 
 function bookmarkRow(item) {
   const upd = new Date(item.updatedAt).toLocaleString("id-ID");
-  return `<article class="library-item"><div><h3>${escapeHtml(item.bookTitle)}</h3><p>Halaman: ${item.page}</p><p>Catatan: ${escapeHtml(item.note || "-")}</p><p>Diperbarui: ${upd}</p></div></article>`;
+  return `<article class="library-item bookmark-item"><div><h3>${escapeHtml(item.bookTitle)}</h3><p class="library-sub">Halaman: ${item.page}</p><p class="library-sub">Catatan: ${escapeHtml(item.note || "-")}</p><p class="library-sub">Diperbarui: ${upd}</p></div></article>`;
 }
 
 function toQueryString(filter) { const q = new URLSearchParams(); if (filter.q) q.set("q", filter.q); if (filter.category) q.set("category", filter.category); if (filter.language) q.set("language", filter.language); return q.toString(); }
