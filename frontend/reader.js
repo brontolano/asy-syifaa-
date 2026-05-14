@@ -1,6 +1,10 @@
+import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.min.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.worker.min.mjs";
+
 const titleEl = document.getElementById("readerTitle");
 const metaEl = document.getElementById("readerMeta");
-const frameEl = document.getElementById("readerFrame");
+const canvasEl = document.getElementById("readerCanvas");
+const stateEl = document.getElementById("readerState");
 const formEl = document.getElementById("readerBookmarkForm");
 const msgEl = document.getElementById("readerMsg");
 const prevBtn = document.getElementById("prevPageBtn");
@@ -10,25 +14,39 @@ const gotoBtn = document.getElementById("gotoPageBtn");
 const pageInfo = document.getElementById("pageInfo");
 
 let currentBook = null;
+let pdfDoc = null;
 let currentPage = 1;
+let totalPages = 1;
 
 function getParam(name) {
   return new URLSearchParams(window.location.search).get(name) || "";
 }
 
-function setReaderPage(page) {
-  if (!currentBook) return;
-  currentPage = Math.max(1, Number(page) || 1);
-  frameEl.src = `${currentBook.fileUrl}#page=${currentPage}`;
-  pageInfo.textContent = `Page ${currentPage}`;
+async function renderPage(pageNum) {
+  if (!pdfDoc) return;
+  currentPage = Math.max(1, Math.min(pageNum, totalPages));
+  const page = await pdfDoc.getPage(currentPage);
+  const base = page.getViewport({ scale: 1 });
+  const maxWidth = document.querySelector(".reader-shell").clientWidth - 8;
+  const scale = Math.min(2, maxWidth / base.width);
+  const viewport = page.getViewport({ scale });
+
+  canvasEl.width = viewport.width;
+  canvasEl.height = viewport.height;
+  const ctx = canvasEl.getContext("2d");
+  await page.render({ canvasContext: ctx, viewport }).promise;
+
+  pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
   gotoInput.value = String(currentPage);
   document.getElementById("readerPage").value = String(currentPage);
+  prevBtn.disabled = currentPage <= 1;
+  nextBtn.disabled = currentPage >= totalPages;
 }
 
 async function loadBook() {
   const id = getParam("id");
   if (!id) {
-    metaEl.textContent = "ID buku tidak ditemukan.";
+    stateEl.textContent = "ID buku tidak ditemukan.";
     return;
   }
 
@@ -36,24 +54,30 @@ async function loadBook() {
   const data = await resp.json();
   const book = (data.data || []).find((v) => v.id === id);
   if (!book) {
-    metaEl.textContent = "Buku tidak ditemukan.";
+    stateEl.textContent = "Buku tidak ditemukan.";
     return;
   }
 
   currentBook = book;
   titleEl.textContent = book.title || "Reader PDF";
   metaEl.textContent = `Penulis: ${book.author || "-"} | Kategori: ${book.category || "-"}`;
-  setReaderPage(1);
+  stateEl.textContent = "Memuat PDF...";
+
+  const loadingTask = pdfjsLib.getDocument(book.fileUrl);
+  pdfDoc = await loadingTask.promise;
+  totalPages = pdfDoc.numPages;
+  stateEl.textContent = "";
+  await renderPage(1);
 }
 
-prevBtn.addEventListener("click", () => setReaderPage(currentPage - 1));
-nextBtn.addEventListener("click", () => setReaderPage(currentPage + 1));
-gotoBtn.addEventListener("click", () => setReaderPage(Number(gotoInput.value || 1)));
-
+prevBtn.addEventListener("click", () => renderPage(currentPage - 1));
+nextBtn.addEventListener("click", () => renderPage(currentPage + 1));
+gotoBtn.addEventListener("click", () => renderPage(Number(gotoInput.value || 1)));
 document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") setReaderPage(currentPage - 1);
-  if (e.key === "ArrowRight") setReaderPage(currentPage + 1);
+  if (e.key === "ArrowLeft") renderPage(currentPage - 1);
+  if (e.key === "ArrowRight") renderPage(currentPage + 1);
 });
+window.addEventListener("resize", () => renderPage(currentPage));
 
 formEl.addEventListener("submit", async (e) => {
   e.preventDefault();

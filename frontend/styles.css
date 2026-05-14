@@ -278,6 +278,22 @@ select:focus,
   align-items: stretch;
 }
 
+.library-cover-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.library-cover {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: #fff;
+}
+
 .library-item h3,
 .library-item p {
   margin: 0 0 6px;
@@ -372,6 +388,23 @@ select:focus,
   border-radius: 12px;
   overflow: hidden;
   height: min(72vh, 760px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #0f0f0f;
+  padding: 8px;
+}
+
+.canvas-reader-shell {
+  overflow: auto;
+}
+
+.reader-canvas {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #fff;
 }
 
 .app-nav {

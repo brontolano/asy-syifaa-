@@ -28,9 +28,10 @@
         <button id="gotoPageBtn" class="btn ghost" type="button">Goto</button>
         <span id="pageInfo" class="note"></span>
       </div>
-      <div class="reader-shell">
-        <iframe id="readerFrame" class="pdf-frame" title="PDF Reader Full Page"></iframe>
+      <div class="reader-shell canvas-reader-shell">
+        <canvas id="readerCanvas" class="reader-canvas"></canvas>
       </div>
+      <p id="readerState" class="note"></p>
     </section>
 
     <section class="widget-box">
@@ -50,7 +51,8 @@
     <a class="app-nav-btn" href="/dashboard">Dashboard</a>
   </nav>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.min.mjs" type="module"></script>
   <script src="/theme.js"></script>
-  <script src="/reader.js"></script>
+  <script type="module" src="/reader.js"></script>
 </body>
 </html>

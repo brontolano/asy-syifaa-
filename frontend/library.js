@@ -1,3 +1,6 @@
+import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.min.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.worker.min.mjs";
+
 const form = document.getElementById("uploadForm");
 const msgEl = document.getElementById("uploadMsg");
 const listEl = document.getElementById("libraryList");
@@ -12,7 +15,6 @@ const viewListBtn = document.getElementById("viewListBtn");
 const viewGridBtn = document.getElementById("viewGridBtn");
 
 let currentFilter = { q: "", category: "", language: "" };
-let viewMode = "list";
 
 function formatBytes(bytes) { if (bytes < 1024) return `${bytes} B`; if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`; return `${(bytes / (1024 * 1024)).toFixed(2)} MB`; }
 function escapeHtml(value) { return (value || "").toString().replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;"); }
@@ -37,16 +39,45 @@ async function saveBookmark(bookId) {
 }
 
 function setViewMode(mode) {
-  viewMode = mode;
   listEl.classList.toggle("library-grid", mode === "grid");
   viewListBtn.classList.toggle("active-toggle", mode === "list");
   viewGridBtn.classList.toggle("active-toggle", mode === "grid");
 }
 
+async function renderCover(canvas, pdfUrl) {
+  try {
+    const loadingTask = pdfjsLib.getDocument(pdfUrl);
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 0.35 });
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext("2d");
+    await page.render({ canvasContext: ctx, viewport }).promise;
+  } catch {
+    const ctx = canvas.getContext("2d");
+    canvas.width = 180;
+    canvas.height = 240;
+    ctx.fillStyle = "#ece5dd";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#666";
+    ctx.font = "16px sans-serif";
+    ctx.fillText("PDF", 72, 120);
+  }
+}
+
+async function renderGridCovers() {
+  const canvases = Array.from(document.querySelectorAll("canvas[data-cover-url]"));
+  for (const c of canvases) {
+    const url = c.getAttribute("data-cover-url");
+    await renderCover(c, url);
+  }
+}
+
 function row(item) {
   const uploaded = new Date(item.uploadedAt).toLocaleString("id-ID");
   const tags = (item.tags || []).length ? item.tags.map((v) => `<span class="tag-chip">${escapeHtml(v)}</span>`).join("") : "-";
-  return `<article class="library-item"><div><h3>${escapeHtml(item.title)}</h3><p>Penulis: ${escapeHtml(item.author || "-")}</p><p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p>Tag: ${tags}</p><p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="actions"><a class="btn ghost" href="/perpustakaan/reader?id=${escapeHtml(item.id)}">Buka PDF</a><button class="btn ghost js-save-bookmark" type="button" data-book-id="${escapeHtml(item.id)}">Bookmark</button></div></article>`;
+  return `<article class="library-item"><div class="library-cover-wrap"><canvas class="library-cover" data-cover-url="${escapeHtml(item.fileUrl)}"></canvas></div><div><h3>${escapeHtml(item.title)}</h3><p>Penulis: ${escapeHtml(item.author || "-")}</p><p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p>Tag: ${tags}</p><p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="actions"><a class="btn ghost" href="/perpustakaan/reader?id=${escapeHtml(item.id)}">Buka PDF</a><button class="btn ghost js-save-bookmark" type="button" data-book-id="${escapeHtml(item.id)}">Bookmark</button></div></article>`;
 }
 
 function bookmarkRow(item) {
@@ -63,6 +94,7 @@ async function loadLibrary() {
   listInfoEl.textContent = `${data.total || 0} dokumen ditemukan`;
   if (!data.data.length) { listEl.innerHTML = "<p class='note'>Belum ada dokumen sesuai filter.</p>"; return; }
   listEl.innerHTML = data.data.map(row).join("");
+  await renderGridCovers();
 }
 
 async function loadBookmarks() {
@@ -109,13 +141,10 @@ viewListBtn.addEventListener("click", () => setViewMode("list"));
 viewGridBtn.addEventListener("click", () => setViewMode("grid"));
 listEl.addEventListener("click", async (e) => {
   const bookmarkBtn = e.target.closest(".js-save-bookmark");
-  if (bookmarkBtn) {
-    const bookId = bookmarkBtn.getAttribute("data-book-id");
-    await saveBookmark(bookId);
-  }
+  if (bookmarkBtn) await saveBookmark(bookmarkBtn.getAttribute("data-book-id"));
 });
 
 applyUploadAccess();
-setViewMode("list");
+setViewMode("grid");
 loadLibrary();
 loadBookmarks();
