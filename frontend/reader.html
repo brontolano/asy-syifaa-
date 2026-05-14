@@ -9,8 +9,18 @@
 </head>
 <body class="reader-only-body">
   <main class="reader-only-main">
-    <div class="reader-only-shell">
-      <canvas id="readerCanvas" class="reader-canvas"></canvas>
+    <section class="pdf-toolbar" aria-label="Kontrol PDF">
+      <button id="prevPageBtn" class="btn ghost" type="button" title="Halaman sebelumnya">◀</button>
+      <label for="pageInput" class="sr-only">Halaman</label>
+      <input id="pageInput" class="pdf-page-input" type="number" min="1" value="1" />
+      <span id="pageTotal" class="note">/ 1</span>
+      <button id="nextPageBtn" class="btn ghost" type="button" title="Halaman berikutnya">▶</button>
+      <button id="zoomOutBtn" class="btn ghost" type="button" title="Perkecil">－</button>
+      <button id="zoomInBtn" class="btn ghost" type="button" title="Perbesar">＋</button>
+      <button id="fitToggleBtn" class="btn ghost" type="button" title="Mode tampilan">Fit Width</button>
+    </section>
+    <div class="reader-only-shell" id="readerShell">
+      <canvas id="readerCanvas" class="reader-canvas" aria-label="Halaman PDF"></canvas>
     </div>
     <p id="readerState" class="note"></p>
   </main>

@@ -431,12 +431,32 @@ select:focus,
   flex-direction: column;
 }
 
+.pdf-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #222;
+  background: #101010;
+  flex-wrap: wrap;
+}
+
+.pdf-page-input {
+  width: 68px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 8px;
+}
+
 .reader-only-shell {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 6px;
+  overflow: auto;
 }
 
 .reader-only-main .note {
@@ -445,4 +465,39 @@ select:focus,
   text-align: center;
   background: rgba(0, 0, 0, 0.5);
   color: #ddd;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .pdf-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .pdf-toolbar .btn {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .pdf-page-input {
+    width: 60px;
+    padding: 6px 8px;
+  }
+
+  .reader-only-shell {
+    padding: 4px;
+  }
 }
