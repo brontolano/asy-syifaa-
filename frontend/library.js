@@ -77,7 +77,7 @@ async function renderGridCovers() {
 function row(item) {
   const uploaded = new Date(item.uploadedAt).toLocaleString("id-ID");
   const tags = (item.tags || []).length ? item.tags.map((v) => `<span class="tag-chip">${escapeHtml(v)}</span>`).join("") : "-";
-  return `<article class="library-item"><div class="library-cover-wrap"><canvas class="library-cover" data-cover-url="${escapeHtml(item.fileUrl)}"></canvas></div><div><h3>${escapeHtml(item.title)}</h3><p>Penulis: ${escapeHtml(item.author || "-")}</p><p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p>Tag: ${tags}</p><p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="actions"><a class="btn ghost" href="/perpustakaan/reader?id=${escapeHtml(item.id)}">Buka PDF</a><button class="btn ghost js-save-bookmark" type="button" data-book-id="${escapeHtml(item.id)}">Bookmark</button></div></article>`;
+  return `<article class="library-item"><div class="library-cover-wrap"><canvas class="library-cover" data-cover-url="${escapeHtml(item.fileUrl)}"></canvas></div><div><h3>${escapeHtml(item.title)}</h3><p>Penulis: ${escapeHtml(item.author || "-")}</p><p>Kategori: ${escapeHtml(item.category || "-")} • Bahasa: ${escapeHtml(item.language || "-")}</p><p>Tag: ${tags}</p><p>${escapeHtml(item.originalName)} • ${formatBytes(item.fileSize)} • ${uploaded}</p></div><div class="actions"><a class="btn ghost" href="/perpustakaan/reader?id=${escapeHtml(item.id)}">Buka PDF</a><button class="btn ghost icon-btn js-save-bookmark" type="button" data-book-id="${escapeHtml(item.id)}" aria-label="Simpan bookmark" title="Simpan bookmark">★</button></div></article>`;
 }
 
 function bookmarkRow(item) {

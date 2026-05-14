@@ -7,51 +7,14 @@
   <link rel="icon" type="image/x-icon" href="/AsySyifaa.ico" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body class="app-base">
-  <main class="dashboard app-main">
-    <header class="topbar">
-      <div class="topbar-title">
-        <img src="/assets/img/logo.png" alt="Logo Asy-Syifaa" class="brand-logo small" />
-        <h1 id="readerTitle">Reader PDF</h1>
-      </div>
-      <div class="actions">
-        <button class="btn ghost" type="button" data-theme-toggle>Mode Gelap</button>
-      </div>
-    </header>
-
-    <section class="widget-box">
-      <p id="readerMeta" class="note"></p>
-      <div class="actions app-toolbar">
-        <button id="prevPageBtn" class="btn ghost" type="button">Prev</button>
-        <button id="nextPageBtn" class="btn ghost" type="button">Next</button>
-        <input id="gotoPageInput" type="number" min="1" placeholder="Page" class="page-input" />
-        <button id="gotoPageBtn" class="btn ghost" type="button">Goto</button>
-        <span id="pageInfo" class="note"></span>
-      </div>
-      <div class="reader-shell canvas-reader-shell">
-        <canvas id="readerCanvas" class="reader-canvas"></canvas>
-      </div>
-      <p id="readerState" class="note"></p>
-    </section>
-
-    <section class="widget-box">
-      <h2>Simpan Bookmark</h2>
-      <form id="readerBookmarkForm" class="library-form-inline">
-        <input id="readerPage" type="number" min="1" placeholder="Halaman" required />
-        <input id="readerNote" type="text" placeholder="Catatan (opsional)" />
-        <button class="btn primary" type="submit">Simpan</button>
-      </form>
-      <p id="readerMsg" class="note"></p>
-    </section>
+<body class="reader-only-body">
+  <main class="reader-only-main">
+    <div class="reader-only-shell">
+      <canvas id="readerCanvas" class="reader-canvas"></canvas>
+    </div>
+    <p id="readerState" class="note"></p>
   </main>
 
-  <nav class="app-nav">
-    <a class="app-nav-btn" href="/">Beranda</a>
-    <a class="app-nav-btn active" href="/perpustakaan">Perpustakaan</a>
-    <a class="app-nav-btn" href="/dashboard">Dashboard</a>
-  </nav>
-
-  <script src="/theme.js"></script>
   <script type="module" src="/reader.js"></script>
 </body>
 </html>

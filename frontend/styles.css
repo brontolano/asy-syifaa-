@@ -324,7 +324,7 @@ select:focus,
 }
 
 .app-main {
-  padding-bottom: 92px;
+  padding-bottom: 24px;
 }
 
 .app-toolbar {
@@ -387,7 +387,7 @@ select:focus,
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  height: min(72vh, 760px);
+  height: calc(100vh - 220px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -407,37 +407,42 @@ select:focus,
   background: #fff;
 }
 
-.app-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  background: var(--card-bg);
-  border-top: 1px solid var(--border-color);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-}
-
-.app-nav-btn {
-  text-align: center;
-  text-decoration: none;
-  color: var(--text-secondary);
-  padding: 10px 8px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-secondary);
-  font-weight: 600;
-}
-
-.app-nav-btn.active {
-  color: #fff;
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
 .page-input {
   width: 86px;
+}
+
+.icon-btn {
+  min-width: 40px;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1;
+}
+.reader-only-body {
+  margin: 0;
+  background: #0b0b0b;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.reader-only-main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.reader-only-shell {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.reader-only-main .note {
+  margin: 0;
+  padding: 6px 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #ddd;
 }
