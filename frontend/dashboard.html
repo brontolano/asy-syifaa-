@@ -12,15 +12,18 @@
     <header class="topbar">
       <div class="topbar-title">
         <img src="/assets/img/logo.png" alt="Logo Asy-Syifaa" class="brand-logo small" />
-        <h1>Module 1 • Dashboard</h1>
+        <h1>Dashboard</h1>
       </div>
-      <div>
-        <label for="role">Role:</label>
-        <select id="role">
-          <option value="ustadz">Ustadz</option>
-          <option value="mudiraam">Mudir'aam</option>
-          <option value="abuya">Abuya</option>
-        </select>
+      <div class="actions">
+        <div>
+          <label for="role">Role:</label>
+          <select id="role">
+            <option value="ustadz">Ustadz</option>
+            <option value="mudiraam">Mudir'aam</option>
+            <option value="abuya">Abuya</option>
+          </select>
+        </div>
+        <button class="btn ghost" type="button" data-theme-toggle>Mode Gelap</button>
       </div>
     </header>
 
@@ -34,6 +37,7 @@
     <a class="back-link" href="/">← Kembali ke Landing</a>
   </main>
 
+  <script src="/theme.js"></script>
   <script src="/dashboard.js"></script>
 </body>
 </html>
