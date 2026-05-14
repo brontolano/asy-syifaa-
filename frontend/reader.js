@@ -11,6 +11,8 @@ const zoomOutBtn = document.getElementById("zoomOutBtn");
 const zoomInBtn = document.getElementById("zoomInBtn");
 const fitToggleBtn = document.getElementById("fitToggleBtn");
 const readerShell = document.getElementById("readerShell");
+const readerBookTitleEl = document.getElementById("readerBookTitle");
+const readerBookInfoEl = document.getElementById("readerBookInfo");
 
 let pdfDoc = null;
 let currentPage = 1;
@@ -63,23 +65,35 @@ async function loadBook() {
   const id = getParam("id");
   if (!id) {
     stateEl.textContent = "ID buku tidak ditemukan.";
+    readerBookTitleEl.textContent = "Buku tidak ditemukan";
+    readerBookInfoEl.textContent = "Pastikan tautan detail buku valid.";
     return;
   }
 
-  const resp = await fetch(`/api/perpustakaan/books`);
-  const data = await resp.json();
-  const book = (data.data || []).find((v) => v.id === id);
-  if (!book) {
-    stateEl.textContent = "Buku tidak ditemukan.";
-    return;
-  }
+  try {
+    const resp = await fetch(`/api/perpustakaan/books`);
+    const data = await resp.json();
+    const book = (data.data || []).find((v) => v.id === id);
+    if (!book) {
+      stateEl.textContent = "Buku tidak ditemukan.";
+      readerBookTitleEl.textContent = "Buku tidak ditemukan";
+      readerBookInfoEl.textContent = "Kemungkinan data sudah dihapus atau ID tidak cocok.";
+      return;
+    }
 
-  stateEl.textContent = "Memuat PDF...";
-  const loadingTask = pdfjsLib.getDocument(book.fileUrl);
-  pdfDoc = await loadingTask.promise;
-  totalPages = pdfDoc.numPages;
-  pageInput.max = String(totalPages);
-  await renderPage(1);
+    readerBookTitleEl.textContent = book.title || "Tanpa Judul";
+    readerBookInfoEl.textContent = `${book.author || "-"} • ${book.category || "-"} • ${book.language || "id"}`;
+    stateEl.textContent = "Memuat PDF...";
+    const loadingTask = pdfjsLib.getDocument(book.fileUrl);
+    pdfDoc = await loadingTask.promise;
+    totalPages = pdfDoc.numPages;
+    pageInput.max = String(totalPages);
+    await renderPage(1);
+  } catch (_err) {
+    stateEl.textContent = "Gagal memuat dokumen PDF.";
+    readerBookTitleEl.textContent = "Terjadi kesalahan";
+    readerBookInfoEl.textContent = "Coba refresh halaman atau pilih buku lain.";
+  }
 }
 
 document.addEventListener("keydown", (e) => {
