@@ -54,6 +54,7 @@ Buka:
   - Perpustakaan (`/perpustakaan`) untuk lihat/baca PDF (tanpa upload).
 
 ## Modul Perpustakaan (Tahap Lanjut)
+- Viewer menggunakan **Mozilla PDF.js** (`pdfjs-dist`) dari asset lokal `/vendor/pdfjs` (bukan CDN).
 - Metadata buku saat upload:
   - `title`, `author`, `category`, `language`, `tags`
 - Fitur pencarian & filter koleksi:

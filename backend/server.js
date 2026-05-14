@@ -111,6 +111,7 @@ const upload = multer({
 app.use(express.json());
 app.use(express.static(FRONTEND_DIR));
 app.use("/library-files", express.static(LIBRARY_DIR));
+app.use("/vendor/pdfjs", express.static(path.join(__dirname, "..", "node_modules", "pdfjs-dist", "build")));
 
 app.get("/api/health", (_req, res) => res.json({ ok: true, service: "asy-syifaa-erp-mvp", modules: [0, 1, 15] }));
 

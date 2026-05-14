@@ -1,5 +1,5 @@
-import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.min.mjs";
-pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.5.136/pdf.worker.min.mjs";
+import * as pdfjsLib from "/vendor/pdfjs/pdf.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/vendor/pdfjs/pdf.worker.mjs";
 
 const titleEl = document.getElementById("readerTitle");
 const metaEl = document.getElementById("readerMeta");
