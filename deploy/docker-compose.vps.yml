@@ -27,23 +27,27 @@ services:
       - traefik.http.routers.erp.rule=Host(`${ERP_SUBDOMAIN}.${BASE_DOMAIN}`)
       - traefik.http.routers.erp.entrypoints=websecure
       - traefik.http.routers.erp.tls=true
+      - traefik.http.routers.erp.priority=100
       - traefik.http.services.erp.loadbalancer.server.port=${APP_PORT}
       - traefik.http.routers.dashboard.rule=Host(`${DASHBOARD_SUBDOMAIN}.${BASE_DOMAIN}`)
       - traefik.http.routers.dashboard.entrypoints=websecure
       - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.priority=100
       - traefik.http.services.dashboard.loadbalancer.server.port=${APP_PORT}
       - traefik.http.routers.perpustakaan.rule=Host(`${LIB_SUBDOMAIN}.${BASE_DOMAIN}`)
       - traefik.http.routers.perpustakaan.entrypoints=websecure
       - traefik.http.routers.perpustakaan.tls=true
+      - traefik.http.routers.perpustakaan.priority=100
       - traefik.http.services.perpustakaan.loadbalancer.server.port=${APP_PORT}
       - traefik.http.routers.website.rule=Host(`${BASE_DOMAIN}`) || Host(`www.${BASE_DOMAIN}`)
       - traefik.http.routers.website.entrypoints=websecure
       - traefik.http.routers.website.tls=true
+      - traefik.http.routers.website.priority=100
       - traefik.http.services.website.loadbalancer.server.port=${APP_PORT}
       - traefik.http.routers.modules.rule=HostRegexp(`{module:[a-z0-9-]+}.${BASE_DOMAIN}`)
       - traefik.http.routers.modules.entrypoints=websecure
       - traefik.http.routers.modules.tls=true
-      - traefik.http.routers.modules.priority=1
+      - traefik.http.routers.modules.priority=10
       - traefik.http.services.modules.loadbalancer.server.port=${APP_PORT}
 
   mysql:
