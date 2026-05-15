@@ -64,6 +64,29 @@ Endpoint halaman utama:
 - `http://localhost:3000/perpustakaan/reader?id=<bookId>`
 - `http://localhost:3000/website` (under maintenance)
 
+## Go Live Online (GitHub -> Hostinger)
+Deploy production sudah disiapkan lewat GitHub Actions:
+- Workflow: `.github/workflows/deploy-vps.yml`
+- Script remote: `deploy/hostinger-deploy.sh`
+
+### 1. Set GitHub Secrets (Repository Settings -> Secrets and variables -> Actions)
+- `HOSTINGER_HOST` = `37.44.245.86`
+- `HOSTINGER_PORT` = `65002`
+- `HOSTINGER_USER` = `u826712707`
+- `HOSTINGER_SSH_KEY` = private key SSH untuk user Hostinger (format OpenSSH)
+
+### 2. Cara deploy
+1. Push ke branch `main` -> deploy otomatis jalan.
+2. Atau jalankan manual dari tab Actions -> `Deploy to Hostinger` -> `Run workflow`.
+
+### 3. Perilaku deploy
+- Sinkron source dari GitHub ke server:
+  - `/home/<user>/deploy/asy-syifaa-github`
+- Sinkron frontend ke web root:
+  - `/home/<user>/domains/asy-syifaa.com/public_html`
+- Jika ada `docker-compose.yml`, stack akan di-reload otomatis.
+- Jika ada PM2, app akan di-reload otomatis.
+
 ## Endpoint API Penting
 - `POST /api/auth/login`
 - `POST /api/auth/logout`
