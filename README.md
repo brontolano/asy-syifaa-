@@ -36,6 +36,20 @@ Implementasi bertahap ERP Pesantren berbasis PRD `PRD_ERP_PESANTREN_ASY_SYIFAA.m
 6. Module Website
 - Modul website internal dibuat `Under Maintenance` di route `/website`.
 
+## Data Aktif Saat Ini
+1. `backend/data/library.json`
+- Koleksi perpustakaan aktif: 21 dokumen.
+- Status publish: 21, draft: 0.
+
+2. `backend/data/bookmarks.json`
+- Bookmark reader tersimpan: 5 data.
+
+3. `backend/data/students.json`
+- Data santri: 0 (belum diisi).
+
+4. `backend/storage/library-pdfs/`
+- Menyimpan file PDF fisik yang direferensikan oleh `library.json`.
+
 ## Menjalankan Lokal
 ```bash
 npm install
@@ -64,37 +78,18 @@ Endpoint halaman utama:
 - `POST /api/perpustakaan/bookmarks`
 - `DELETE /api/perpustakaan/bookmarks/:bookId`
 
-## Domain Go-Live
-- `erp.asy-syifaa.com` -> Landing ERP (staff & publik)
-- `dashboard.asy-syifaa.com` -> Dashboard (staff)
-- `dashboard.asy-syifaa.com/dashboard?module=website` -> Dashboard Website (staff)
-- `dashboard.asy-syifaa.com/dashboard?module=perpustakaan` -> Dashboard Perpustakaan (staff)
-- `perpustakaan.asy-syifaa.com` -> Perpustakaan (publik)
-- `asy-syifaa.com` dan `www.asy-syifaa.com` -> Website publik (konten project ini)
-- `asy-syifaa.com/login` -> Sistem login & session
+## Rencana Arsitektur Domain (Horizons)
+1. Domain utama
+- `asy-syifaa.com` dan `www.asy-syifaa.com` sementara menampilkan halaman website `Under Maintenance`.
 
-## DNS Minimal
-- `A @` -> IP VPS
-- `A www` -> IP VPS
-- `A erp` -> IP VPS
-- `A dashboard` -> IP VPS
-- `A perpustakaan` -> IP VPS
-- Opsional `A *` -> IP VPS untuk fallback `[modul].asy-syifaa.com`
+2. Portal ERP
+- `erp.asy-syifaa.com` sebagai pintu masuk ERP (dashboard, login, modul).
 
-## Catatan SQL Cloud Storage
-- Placeholder sudah disiapkan di deploy untuk integrasi database/storage.
-- Detail cloud storage SQL akan diaktifkan setelah parameter provider diberikan.
+3. Modul berbasis subdomain
+- Pola: `[modul].asy-syifaa.com`.
+- Contoh implementasi aktif saat ini: `perpustakaan.asy-syifaa.com`.
+- Modul yang belum tersedia menampilkan pesan "belum tersedia".
 
-## Eksekusi Go-Live di VPS
-Jalankan dari root project:
-
-```bash
-chmod +x deploy/one-click-deploy.sh deploy/verify-domains.sh
-./deploy/one-click-deploy.sh
-./deploy/verify-domains.sh
-```
-
-Jika DNS wildcard modul ingin otomatis:
-- Tambah `A * -> IP VPS`
-- Subdomain yang belum ada modul akan menampilkan pesan "belum tersedia".
+4. Integrasi konten
+- Opsi CMS artikel via WordPress bisa dipadukan, dengan tema tetap mengikuti base aplikasi.
 
