@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asy-Syifaa ERP - Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="/AsySyifaa.ico" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="dashboard-page">
+  <main class="dashboard dashboard-shell">
+    <aside class="dash-sidebar">
+      <div class="dash-brand">
+        <img src="/assets/img/logo.png" alt="Logo Asy-Syifaa" class="brand-logo small" />
+        <div>
+          <p class="brand-kicker">ERP Pesantren</p>
+          <p class="brand-sub">CMS Console</p>
+        </div>
+      </div>
+      <nav class="dash-nav">
+        <a class="dash-nav-item" href="/dashboard?module=dashboard">Dashboard</a>
+        <a class="dash-nav-item" href="/dashboard?module=akademik">Akademik</a>
+        <a class="dash-nav-item" href="/dashboard?module=ai-agent">AI Agent</a>
+        <a class="dash-nav-item" href="/dashboard?module=cs">CS</a>
+        <a class="dash-nav-item" href="/dashboard?module=data-santri">Data Santri</a>
+        <a class="dash-nav-item" href="/dashboard?module=dokumen">Dokumen</a>
+        <a class="dash-nav-item" href="/dashboard?module=event">Event</a>
+        <a class="dash-nav-item" href="/dashboard?module=keuangan">Keuangan</a>
+        <a class="dash-nav-item" href="/dashboard?module=kesantrian">Kesantrian</a>
+        <a class="dash-nav-item" href="/dashboard?module=konseling">Konseling</a>
+        <a class="dash-nav-item" href="/dashboard?module=lms">LMS</a>
+        <a class="dash-nav-item" href="/dashboard?module=marketplace">Marketplace</a>
+        <a class="dash-nav-item" href="/dashboard?module=perpustakaan">Perpustakaan</a>
+        <a class="dash-nav-item" href="/dashboard?module=ppdb">PPDB</a>
+        <a class="dash-nav-item" href="/dashboard?module=tabungan">Tabungan</a>
+        <a class="dash-nav-item" href="/dashboard?module=tahfidz">Tahfidz</a>
+        <a class="dash-nav-item" href="/dashboard?module=tugas">Tugas</a>
+        <a class="dash-nav-item" href="/dashboard?module=website">Website</a>
+        <a class="dash-nav-item" href="/dashboard?module=whatsapp">WhatsApp</a>
+      </nav>
+      <div class="dash-back">
+        <a class="dash-nav-item" href="/dashboard?module=pengaturan">Pengaturan</a>
+        <a class="back-link" href="/">← Kembali ke Landing</a>
+      </div>
+    </aside>
+
+    <section class="dash-content">
+      <header class="topbar dash-topbar">
+        <div class="topbar-title">
+          <h1>Dashboard Overview</h1>
+          <p id="dashboardMsg" class="note"></p>
+        </div>
+        <div class="actions">
+          <input class="dash-search" type="text" placeholder="Cari modul atau data..." />
+          <a class="profile-icon-btn" href="/profil" aria-label="Profil">👤</a>
+          <div>
+            <label for="role">Role</label>
+            <select id="role">
+              <option value="ustadz">Ustadz</option>
+              <option value="mudiraam">Mudir'aam</option>
+              <option value="abuya">Abuya</option>
+            </select>
+          </div>
+          <button class="theme-icon-toggle" type="button" data-theme-toggle aria-label="Ganti tema">🌙</button>
+        </div>
+      </header>
+
+      <section class="dash-stats" id="kpiGrid"></section>
+
+      <section id="cmsLibrarySection" class="widget-box">
+        <h2>CMS Perpustakaan Digital</h2>
+        <div id="dropZone" class="upload-dropzone">
+          <p>Drag & drop file PDF di sini atau klik untuk pilih file</p>
+          <input id="pdfInput" type="file" accept="application/pdf" multiple hidden />
+          <button id="pickPdfBtn" class="btn ghost" type="button">Pilih File PDF</button>
+        </div>
+        <div id="pendingListWrap" class="pending-list-wrap" hidden>
+          <h3>File Siap Upload</h3>
+          <ul id="pendingList" class="pending-list"></ul>
+        </div>
+        <form id="metaForm" class="library-form-inline cms-inline-form">
+          <input id="metaTitle" type="text" placeholder="Nama file / judul (opsional)" />
+          <input id="metaCategory" type="text" placeholder="Kategori" />
+          <input id="metaTags" type="text" placeholder="Tag (pisah koma)" />
+          <button class="btn primary" type="submit">Upload</button>
+        </form>
+        <p id="cmsMsg" class="note"></p>
+      </section>
+
+      <section id="cmsTableSection" class="widget-box">
+        <div class="cms-toolbar">
+          <input id="searchInput" class="dash-search" type="text" placeholder="Cari file, kategori, tag..." />
+          <select id="pageSizeSelect">
+            <option value="20">20 / halaman</option>
+            <option value="50">50 / halaman</option>
+            <option value="100">100 / halaman</option>
+          </select>
+          <select id="bulkAction">
+            <option value="">Bulk Action</option>
+            <option value="publish">Set Publish</option>
+            <option value="draft">Set Draft</option>
+            <option value="delete">Hapus</option>
+          </select>
+          <button id="bulkApplyBtn" class="btn ghost" type="button">Terapkan</button>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th><input id="checkAll" type="checkbox" /></th>
+                <th>No</th>
+                <th>Nama File</th>
+                <th>Kategori</th>
+                <th>Tag</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="libraryRows"></tbody>
+          </table>
+        </div>
+        <div class="cms-pagination">
+          <button id="prevPageBtn" class="btn ghost" type="button">Sebelumnya</button>
+          <span id="pageInfo" class="note">Halaman 1/1</span>
+          <button id="nextPageBtn" class="btn ghost" type="button">Berikutnya</button>
+        </div>
+      </section>
+
+      <section id="dashboardLiteSection" class="dash-panels" hidden>
+        <article class="widget-box">
+          <h2>Data</h2>
+          <p class="note">Belum ada data ditampilkan.</p>
+        </article>
+        <article class="widget-box">
+          <h2>Quick Action</h2>
+          <div class="actions">
+            <a class="btn ghost" href="/dashboard?module=perpustakaan">Kelola Perpustakaan</a>
+          </div>
+        </article>
+      </section>
+
+      <section id="moduleStandaloneSection" class="widget-box" hidden>
+        <h2 id="moduleStandaloneTitle">Panel Modul</h2>
+        <p id="moduleStandaloneNote" class="note">Panel ini mandiri untuk modul terkait.</p>
+      </section>
+    </section>
+  </main>
+
+  <script src="/theme.js"></script>
+  <script src="/auth.js"></script>
+  <script src="/dashboard.js"></script>
+</body>
+</html>

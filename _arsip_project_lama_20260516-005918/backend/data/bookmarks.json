@@ -1,0 +1,47 @@
+[
+  {
+    "id": "a5127c6e-5697-4d37-a5b9-81ed40c415ee",
+    "readerId": "public:43f44e7d-142c-4223-ad79-4ca2b1b0a8c7",
+    "bookId": "6e268da1-e9d8-427e-88ea-2fcb0195a221",
+    "page": 1,
+    "note": "",
+    "createdAt": "2026-05-15T02:08:48.053Z",
+    "updatedAt": "2026-05-15T02:08:48.053Z"
+  },
+  {
+    "id": "e0f667ca-450e-47c2-97e8-7b2f72bbb114",
+    "readerId": "public:43f44e7d-142c-4223-ad79-4ca2b1b0a8c7",
+    "bookId": "f89dcb86-fa33-47ae-ba03-28593ac1ad8f",
+    "page": 1,
+    "note": "",
+    "createdAt": "2026-05-15T02:08:53.973Z",
+    "updatedAt": "2026-05-15T02:08:53.973Z"
+  },
+  {
+    "id": "67a230e4-fa4e-41fa-9893-b0742ae4af77",
+    "readerId": "superadmin:superadmin",
+    "bookId": "1b608c98-6587-45af-a20e-2628b108ceb9",
+    "page": 1,
+    "note": "",
+    "createdAt": "2026-05-15T05:33:42.973Z",
+    "updatedAt": "2026-05-15T05:33:42.973Z"
+  },
+  {
+    "id": "73a720cd-0bf6-4b4a-961c-1410be38349e",
+    "readerId": "superadmin:superadmin",
+    "bookId": "eece8efb-db71-431f-9e7c-be669ba84469",
+    "page": 1,
+    "note": "",
+    "createdAt": "2026-05-15T05:33:44.468Z",
+    "updatedAt": "2026-05-15T05:33:44.468Z"
+  },
+  {
+    "id": "f27639ef-f03c-45ab-81ff-c0366d34afe7",
+    "readerId": "superadmin:superadmin",
+    "bookId": "2042bbaf-5472-415d-9544-c5ef4f343f65",
+    "page": 1,
+    "note": "",
+    "createdAt": "2026-05-15T05:33:45.819Z",
+    "updatedAt": "2026-05-15T05:33:45.819Z"
+  }
+]

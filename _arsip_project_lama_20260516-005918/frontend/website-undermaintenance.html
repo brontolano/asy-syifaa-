@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under Maintenance - Asy-Syifaa Wal Mahmuudiyyah</title>
+  <link rel="icon" type="image/x-icon" href="/AsySyifaa.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/website-undermaintenance.css" />
+</head>
+<body>
+  <div class="background-overlay"></div>
+  <canvas id="dnaCanvas"></canvas>
+
+  <main class="container">
+    <section class="glass-card">
+      <div class="logo-section">
+        <h2 class="brand-title">ASY-SYIFAA</h2>
+        <p class="brand-subtitle">Wal Mahmuudiyyah</p>
+      </div>
+
+      <div class="status-badge">
+        <span class="dot"></span>
+        Sistem Dalam Pemeliharaan
+      </div>
+
+      <h1 class="main-heading" id="wmTitle">Kami Akan Segera Kembali</h1>
+      <p class="description" id="wmMessage">
+        Saat ini kami sedang melakukan pembaharuan sistem untuk memberikan pengalaman terbaik bagi seluruh Santri dan Wali Santri. Mohon maaf atas ketidaknyamanan ini.
+      </p>
+
+      <div class="dna-info">
+        <div class="info-item">
+          <span class="label">Progress</span>
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <a id="backCmsLink" href="/dashboard?module=website" hidden>Kembali ke Dashboard CMS</a>
+        <p>&copy; 2026 PPIT Asy-Syifaa Wal Mahmuudiyyah. All rights reserved.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/auth.js"></script>
+  <script src="/website-undermaintenance.js"></script>
+</body>
+</html>

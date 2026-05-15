@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Outfit", "Segoe UI", sans-serif;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.background-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(57, 118, 132, 0.35), rgba(0, 0, 0, 0.95));
+  z-index: 1;
+}
+
+#dnaCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+}
+
+.container {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.glass-card {
+  width: min(760px, 100%);
+  padding: 30px 26px;
+  border-radius: 24px;
+  background: rgba(16, 20, 28, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.logo-section {
+  margin-bottom: 12px;
+}
+
+.brand-title {
+  margin: 0;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.brand-subtitle {
+  margin: 6px 0 0;
+  color: #b5c2cc;
+  font-weight: 400;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(57, 118, 132, 0.25);
+  border: 1px solid rgba(57, 118, 132, 0.6);
+  color: #dff8ff;
+  font-size: 13px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #25d366;
+  box-shadow: 0 0 0 8px rgba(37, 211, 102, 0.16);
+  animation: pulse 1.6s infinite ease-in-out;
+}
+
+.main-heading {
+  margin: 6px 0 12px;
+  font-size: clamp(1.7rem, 3.6vw, 2.7rem);
+  font-weight: 800;
+}
+
+.description {
+  margin: 0 auto;
+  max-width: 620px;
+  line-height: 1.7;
+  color: #d7dee4;
+}
+
+.dna-info {
+  margin-top: 24px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: #c7d7df;
+  font-size: 13px;
+  text-align: left;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 68%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #397684, #25d366);
+  animation: progressMove 2.6s ease-in-out infinite alternate;
+}
+
+.footer {
+  margin-top: 24px;
+  color: #acbac4;
+  font-size: 13px;
+}
+
+.footer a {
+  color: #9dd8e6;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.14); opacity: 0.85; }
+}
+
+@keyframes progressMove {
+  0% { width: 62%; }
+  100% { width: 74%; }
+}

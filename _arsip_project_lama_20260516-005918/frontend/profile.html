@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil - ERP Asy-Syifaa</title>
+  <link rel="icon" type="image/x-icon" href="/AsySyifaa.ico" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="landing-body">
+  <main class="landing profile-page">
+    <section class="widget-box profile-box">
+      <div class="brand-head">
+        <img src="/assets/img/logo.png" alt="Logo Asy-Syifaa" class="brand-logo" />
+        <div>
+          <p class="brand-kicker">Detail Profil</p>
+          <p class="brand-sub">Role Session Aktif</p>
+        </div>
+        <div class="hero-actions-min">
+          <a class="profile-icon-btn" href="/profil" aria-label="Profil">👤</a>
+          <button class="theme-icon-toggle" type="button" data-theme-toggle aria-label="Ganti tema">🌙</button>
+        </div>
+      </div>
+
+      <div class="profile-grid">
+        <div class="profile-row"><strong>Nama Akun</strong><span id="pfName">-</span></div>
+        <div class="profile-row"><strong>Role</strong><span id="pfRole">-</span></div>
+        <div class="profile-row"><strong>Status</strong><span id="pfStatus">-</span></div>
+      </div>
+
+      <div class="actions">
+        <a class="btn ghost" href="/">Kembali</a>
+        <button id="logoutBtn" class="btn primary" type="button">Logout</button>
+      </div>
+      <p id="pfMsg" class="note"></p>
+    </section>
+  </main>
+
+  <script src="/theme.js"></script>
+  <script src="/auth.js"></script>
+  <script src="/profile.js"></script>
+</body>
+</html>
